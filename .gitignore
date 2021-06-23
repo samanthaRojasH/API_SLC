@@ -1,0 +1,8 @@
+venv
+*.pyc
+.DS_Store
+.env
+__pycache__
+.vscode
+*.xls
+*.xlsx
