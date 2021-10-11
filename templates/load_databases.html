@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+    <script type="text/javascript">
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+        // files is a FileList of File objects. List some properties.
+        var output = [];
+        for (var i = 0, f; f = files[i]; i++) {
+            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                              f.size, ' bytes, last modified: ',
+                              f.lastModifiedDate.toLocaleDateString(), '</li>');
+        }
+        document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    }
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+        function validar() {
+          //obteniendo el valor que se puso en el campo text del formulario
+          var fileNameForm = document.getElementById("fileName").value;
+          var fileVal = document.getElementById("files").value;
+          alert(fileVal)
+          //la condición
+          if (fileNameForm.length == 0 || /^\s+$/.test(fileNameForm)) {
+            alert('El campo de fileName esta vacío!');
+          return false;
+          }
+          
+          if(fileVal==''){
+            alert("Archivo no ha sido cargado");
+            return false; 
+          }                   
+          return true,fileVal;
+        }
+    </script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Formulario Guardar Imagen | Scrum Latam</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename= 'css/master.css') }}">
+    </head>
+    <body>
+        <div class="login-box">
+            <img src="/static/img/logo.png" class="avatar" alt="Avatar Image">
+            
+            <form name ="formularioLoad" class="formularioTipo1" method="POST" action="{{url_for('procesarscript')}}" enctype=multipart/form-data onsubmit="return validar()">
+              <strong>Bienvenido: </strong>{{username}}
+              <br>
+              <br>
+
+              <label for="Choose">Choose the file to load: *</label>
+              <br>
+              <input type="file" id="files" accept="xls" name="files"/>
+              <output id="list" name="list"></output>
+              <br>
+
+              <input id="submit" type="submit" value="Upload">
+            </form>
+          </div>
+    </body>
+</html>

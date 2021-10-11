@@ -2,18 +2,20 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Community API | Scrum Latam</title>
+    <title>Community Events Tools | Scrum Latam</title>
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/master.css') }}">
   </head>
   <body>    
     <div class="login-box">
       <img src="/static/img/logo.png" class="avatar" alt="Avatar Image">
-      <h1>APIS</h1><br><br><br>
-      <form name ="URLS"><b><u>
-        <a href="participants">Participants</a><br><br>
-        <a href="webinars">Webinars</a><br><br><br><br></u>
-        <h1>Others</h1><br><u>
-        <a href="login">Tools</a></u>
+      <h2><strong>Bienvenido: </strong>{{username}}</h2>
+      <br>
+      <br>
+      <br>
+      <h1>Tools</h1><br><br>
+      <form name ="Tools"><b><u>
+        <a href="join_databases">Join databases</a><br><br>
+        <a href="load_databases">Load databases</a>
       </u></b>
       </form>
     </div>

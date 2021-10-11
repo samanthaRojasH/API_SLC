@@ -4,9 +4,13 @@ import pymysql
 import os
 import sys
 from datetime import datetime
+import db
+from rest import procesarscript
 
 # Open the workbook and define the worksheet
-filename = r"C:/Users/saman/OneDrive/Documentos/SCRUM/28092021/28092021_SLC.xls"
+filenameH = procesarscript()
+print(filenameH)
+filename = r"C:/Users/saman/OneDrive/Documentos/SCRUM/05102021/05102021_SLC - Copy.xls"
 if not os.path.exists(filename):
     print("No encontré el archivo")
     sys.exit()
@@ -17,28 +21,16 @@ lista = []
 
 
 database = pymysql.connect(
-    host="billfrqpmswhgyydyxcv-mysql.services.clever-cloud.com",
-    user="uxhfzmaewjqzxbrj",
-    passwd="GBn0L8UIFXxRYooyhJIE",
-    database="billfrqpmswhgyydyxcv",
+    host = db.app.config['MYSQL_DATABASE_HOST'],
+    #"billfrqpmswhgyydyxcv-mysql.services.clever-cloud.com",
+    user = db.app.config['MYSQL_DATABASE_USER'],
+    #"uxhfzmaewjqzxbrj",
+    passwd = db.app.config['MYSQL_DATABASE_PASSWORD'],
+    #"GBn0L8UIFXxRYooyhJIE",
+    database = db.app.config['MYSQL_DATABASE_DB']
+    #"billfrqpmswhgyydyxcv",
 )
 
-""" for row in range(1, sheet.nrows):
-
-    email = sheet.cell(row, 0).value
-
-    cursor_comprobar = database.cursor()
-    query_comprobar = """ """SELECT email FROM SLC_community WHERE email = %s""" """
-    values_comprobar = email
-    cursor_comprobar.execute(query_comprobar, values_comprobar)
-
-    result = cursor_comprobar.fetchall()
-    for rowSave in result:
-        comprobado = list(rowSave)
-        lista.append(comprobado[0])
-        database.commit()
-
-cursor_comprobar.close() """
 print(" ")
 print("************************************CONSTRUYENDO COMUNIDAD SCRUM LATAM*************************************")
 print(" ")
@@ -94,7 +86,7 @@ for row in range(0, sheet.nrows):
     values = (email, name, last_name, id_C, today_date)
     cursor.execute(query, values)
 
-    today_date_N = today_date + "_W2809"
+    today_date_N = today_date + "_WTEST"
 
     query_1 = """INSERT INTO SLC_webinar (id_webinar, webinar, date) SELECT %s, %s, %s WHERE NOT EXISTS (SELECT * FROM SLC_webinar WHERE webinar = '"""+webinarComparar +"""')"""
     values_1 = (today_date_N, webinar, date)
