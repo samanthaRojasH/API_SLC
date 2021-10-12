@@ -1,4 +1,3 @@
-from pymongo import mongo_client
 import pymysql
 from app import app
 from db import mysql
@@ -57,7 +56,6 @@ def procesar():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    Mongodb.client()
     database = Mongodb.client["imageBot"]
     collection = database["imageBotCT"]
 
