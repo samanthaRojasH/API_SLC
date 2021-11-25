@@ -3,7 +3,6 @@ from app import app
 from db import mysql
 from flask import jsonify
 from flask import Flask, request, render_template
-import dns
 import sys
 
 @app.route('/')
