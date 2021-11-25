@@ -2,8 +2,8 @@ from app import app
 from flaskext.mysql import MySQL
 import configparser
 
-configMY = configparser.ConfigParser()
-configMY.read('config.ini')
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 mysql = MySQL()
  
