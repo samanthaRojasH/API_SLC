@@ -3,7 +3,7 @@ from app import app
 from db import mysql
 from flask import jsonify
 from flask import Flask, request, render_template
-import sys
+import itertools
 
 @app.route('/')
 def rest():    
@@ -76,10 +76,33 @@ def Participations_Per_Country():
 @app.route('/followers')
 def followers():
 	try:
+		rows = {}
 		conn = mysql.connect()
 		cursor = conn.cursor(pymysql.cursors.DictCursor)
-		cursor.execute("SELECT SN.Social_Network, sum(FD.Total_Follower) FROM SLC_Followers_Date FD, SLC_Social_Network SN where SN.ID_Network = FD.ID_Network GROUP by FD.ID_Network ORDER BY Total_Follower")
-		rows = cursor.fetchall()
+		
+		cursor.execute("SELECT SN.Social_Network, FD.Total_Follower FROM SLC_Followers_Date FD, SLC_Social_Network SN where SN.ID_Network = FD.ID_Network AND SN.Social_Network = 'LinkedIn'")
+		
+		result = 0
+		for row in cursor:
+			Social_Network = row['Social_Network']
+			Total_Follower = int(row['Total_Follower'])
+			result = result + Total_Follower
+		print()
+		print("Nuestra red social {} tiene {} seguidores".format(Social_Network, result))
+		rows[Social_Network] = result
+
+		cursor.execute("SELECT SN.Social_Network, FD.Total_Follower FROM SLC_Followers_Date FD, SLC_Social_Network SN where SN.ID_Network = FD.ID_Network AND SN.Social_Network = 'Facebook'")
+		
+		result = 0
+		for row in cursor:
+			Social_Network = row['Social_Network']
+			Total_Follower = int(row['Total_Follower'])
+			result = result + Total_Follower
+		
+		print("Nuestra red social {} tiene {} seguidores".format(Social_Network, result))
+		print()
+		rows[Social_Network] = result
+		
 		resp = jsonify(rows)
 		resp.status_code = 200
 		return resp
